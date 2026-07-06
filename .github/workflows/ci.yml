@@ -1,0 +1,30 @@
+name: Spring Boot CI
+
+on: # Thực thi khi nào
+  push: # Khi push code vào nhánh main
+    branches:
+      - main
+
+  pull_request: # Khi merge pull request vào nhánh main
+    branches:
+      - main
+
+jobs: # Công việc cụ thể
+  build:
+
+    runs-on: ubuntu-latest # Khởi tại máy để thực thi
+
+    steps: # Các bước thực thi cụ thể
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build
+        run: mvn clean package
